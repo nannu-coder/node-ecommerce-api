@@ -17,6 +17,7 @@ const authRoute = require("./Routes/AuthRoute");
 const userRoute = require("./Routes/UserRoutes");
 const productRoute = require("./Routes/ProductRoute");
 const reviewRoute = require("./Routes/ReviewRoute");
+const orderRoute = require("./Routes/OrderRouter");
 
 //Middleware
 app.use(morgan("tiny"));
@@ -38,6 +39,7 @@ app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/users", userRoute);
 app.use("/api/v1/products", productRoute);
 app.use("/api/v1/reviews", reviewRoute);
+app.use("/api/v1/orders", orderRoute);
 
 //Error Handler
 app.use(notFoundMiddleware);

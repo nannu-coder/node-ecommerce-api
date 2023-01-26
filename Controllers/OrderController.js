@@ -1,6 +1,11 @@
+const { StatusCodes } = require("http-status-codes");
+const { BadRequestError, notFoundError, forbiddenError } = require("../Errors");
+const Product = require("../Models/ProductModel");
+
 const createOrder = async (req, res) => {
-  res.send("Create Order");
+  res.send("create Product");
 };
+
 const getAllOrder = async (req, res) => {
   res.send("get All Order");
 };
