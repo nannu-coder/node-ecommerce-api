@@ -1,6 +1,12 @@
 require("dotenv").config();
 require("express-async-errors");
 const cors = require("cors");
+
+const rateLimiter = require("express-rate-limit");
+const helmet = require("helmet");
+const xss = require("xss-clean");
+const mongoSanitize = require("express-mongo-sanitize");
+
 const morgan = require("morgan");
 const express = require("express");
 const app = express();
@@ -20,12 +26,22 @@ const reviewRoute = require("./Routes/ReviewRoute");
 const orderRoute = require("./Routes/OrderRouter");
 
 //Middleware
+app.set("trust proxy", 1);
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000,
+    max: 60,
+  })
+);
 app.use(morgan("tiny"));
 app.use(express.json());
-app.use(cors());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(fileUpload());
 app.use(express.static("./public"));
+app.use(helmet());
+app.use(cors());
+app.use(xss());
+app.use(mongoSanitize());
 
 app.get("/", (req, res) => {
   res.send("Ecommerce API!");
